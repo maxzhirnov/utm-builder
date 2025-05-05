@@ -1,76 +1,103 @@
 # UTM Builder
 
-A modern web application for generating UTM-tagged URLs, built with Go, HTMX, and Tailwind CSS.
+A modern web application for generating UTM-tagged URLs with a clean, responsive interface.
 
 ## Features
 
-- 🚀 Simple and intuitive interface for generating UTM-tagged URLs
-- ⚡ Real-time URL generation with HTMX
-- 🎨 Modern UI with Tailwind CSS
-- 📋 One-click URL copying with visual feedback
-- 🔄 Hot reloading for development
-- 📱 Responsive design
+- **Real-time URL Generation**: Generate UTM-tagged URLs instantly
+- **Modern UI**: Clean, responsive interface built with Tailwind CSS
+- **Configurable Options**: Customize sources and mediums through YAML configuration
+- **Custom Inputs**: Support for custom source and medium values
+- **Copy to Clipboard**: Easy copying of generated URLs
+- **Hot Reloading**: Development server with automatic reloading using Air
 
 ## Tech Stack
 
 ### Backend
-- **Go** - Fast and efficient server-side language
-- **net/http** - Go's standard library HTTP server with built-in routing
-- **html/template** - Go's standard library template engine
+- **Go**: Core application logic
+- **Standard Library**: Using `net/http` for HTTP server and routing, `html/template` for templates
+- **YAML**: Configuration management using `gopkg.in/yaml.v3`
 
 ### Frontend
-- **HTMX** - For dynamic, AJAX-like functionality without writing JavaScript
-- **Tailwind CSS** - Utility-first CSS framework for rapid UI development
-- **Modern JavaScript** - For clipboard functionality
+- **HTMX**: Dynamic UI updates without page reloads
+- **Tailwind CSS**: Modern, utility-first CSS framework
+- **PostCSS**: CSS processing and optimization
 
 ## Development Setup
 
-1. Install Go (1.24.2 or later)
-2. Install Node.js and npm
-3. Clone the repository
-4. Install dependencies:
+1. **Install Dependencies**:
    ```bash
-   make deps
+   # Install Go dependencies
+   go mod download
+
+   # Install Node.js dependencies
+   npm install
    ```
-5. Run the development server:
+
+2. **Build CSS**:
    ```bash
+   npm run build:css
+   ```
+
+3. **Run the Application**:
+   ```bash
+   # Development mode with hot reloading
    make run
+
+   # Production build
+   make build
    ```
 
-## Available Commands
+## Configuration
 
-- `make run` - Start the development server with hot reload
-- `make run-prod` - Run the production server
-- `make build` - Build the application
-- `make clean` - Clean build artifacts
-- `make setup` - Set up the development environment
-- `make deps` - Install all dependencies
+The application uses a YAML configuration file (`config/utm.yaml`) to manage UTM parameters:
+
+```yaml
+sources:
+  - google
+  - facebook
+  - twitter
+  - linkedin
+  - custom
+
+mediums:
+  - cpc
+  - cpm
+  - email
+  - social
+  - banner
+  - custom
+```
+
+To update the configuration:
+1. Edit `config/utm.yaml`
+2. Restart the server
 
 ## Project Structure
 
 ```
 .
-├── assets/
-│   └── css/           # CSS files (Tailwind)
-├── cmd/
-│   └── server/        # Main application entry point
-├── internal/
-│   ├── handlers/      # HTTP handlers
-│   ├── templates/     # HTML templates
-│   ├── utm/          # UTM parameter handling
-│   └── dictionary/   # Predefined UTM values
-├── .air.toml         # Hot reload configuration
-├── Makefile          # Build and run commands
-├── tailwind.config.js # Tailwind configuration
-└── package.json      # Frontend dependencies
+├── assets/           # Static assets
+│   └── css/         # CSS files
+├── cmd/             # Application entry points
+│   └── server/      # Main server
+├── config/          # Configuration files
+│   └── utm.yaml     # UTM parameters configuration
+├── internal/        # Internal packages
+│   ├── config/      # Configuration management
+│   ├── handlers/    # HTTP handlers
+│   ├── templates/   # HTML templates
+│   └── utm/         # UTM URL generation
+├── Makefile         # Build and run commands
+└── README.md        # Project documentation
 ```
 
-## Why This Stack?
+## Available Commands
 
-- **Go**: Provides excellent performance and a simple, maintainable codebase
-- **HTMX**: Enables dynamic functionality without complex JavaScript frameworks
-- **Tailwind CSS**: Allows rapid UI development with utility classes
-- **Hot Reloading**: Speeds up development with instant feedback
+- `make run`: Start the development server with hot reloading
+- `make build`: Build the production binary
+- `make clean`: Clean build artifacts
+- `make setup`: Install dependencies and build CSS
 
 ## Contributing
 
@@ -82,4 +109,4 @@ A modern web application for generating UTM-tagged URLs, built with Go, HTMX, an
 
 ## License
 
-MIT
+MIT License

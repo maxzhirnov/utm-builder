@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UTM Builder</title>
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <link href="/assets/css/output.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <div class="max-w-2xl mx-auto p-6">
-        <h1 class="text-3xl font-bold text-gray-800 mb-8">UTM Builder</h1>
-        {{ block "content" . }}{{ end }}
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        {{ template "content" . }}
     </div>
 </body>
 </html>
