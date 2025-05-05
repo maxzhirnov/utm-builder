@@ -1,0 +1,71 @@
+{{ define "result" }}
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <p class="text-sm font-medium text-gray-700 mb-2">Сгенерированная ссылка:</p>
+    <div class="flex space-x-2">
+        <input type="text" value="{{ .Link }}" readonly class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50" id="generated-url">
+        <button onclick="copyToClipboard()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" id="copy-button">
+            Копировать
+        </button>
+    </div>
+</div>
+
+<script>
+function copyToClipboard() {
+    const urlInput = document.getElementById('generated-url');
+    const copyButton = document.getElementById('copy-button');
+    
+    // Select the text
+    urlInput.select();
+    urlInput.setSelectionRange(0, 99999); // For mobile devices
+    
+    try {
+        // Try using the modern Clipboard API
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(urlInput.value).then(() => {
+                showSuccess();
+            }).catch(() => {
+                fallbackCopy();
+            });
+        } else {
+            fallbackCopy();
+        }
+    } catch (err) {
+        fallbackCopy();
+    }
+
+    function fallbackCopy() {
+        try {
+            // Fallback for older browsers
+            document.execCommand('copy');
+            showSuccess();
+        } catch (err) {
+            showError();
+        }
+    }
+
+    function showSuccess() {
+        copyButton.textContent = 'Скопировано!';
+        copyButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+        copyButton.classList.add('bg-green-600', 'hover:bg-green-700');
+        
+        setTimeout(() => {
+            copyButton.textContent = 'Копировать';
+            copyButton.classList.remove('bg-green-600', 'hover:bg-green-700');
+            copyButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
+        }, 2000);
+    }
+
+    function showError() {
+        copyButton.textContent = 'Ошибка';
+        copyButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+        copyButton.classList.add('bg-red-600', 'hover:bg-red-700');
+        
+        setTimeout(() => {
+            copyButton.textContent = 'Копировать';
+            copyButton.classList.remove('bg-red-600', 'hover:bg-red-700');
+            copyButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
+        }, 2000);
+    }
+}
+</script>
+{{ end }}
